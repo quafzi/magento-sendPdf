@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Quafzi_SendPdf>
+            <version>0.1.0</version>
+        </Quafzi_SendPdf>
+    </modules>
+    <global>
+        <helpers>
+            <quafzi_sendpdf>
+                <class>Quafzi_SendPdf_Helper</class>
+            </quafzi_sendpdf>
+        </helpers>
+        <models>
+            <quafzi_sendpdf>
+                <class>Quafzi_SendPdf_Model</class>
+            </quafzi_sendpdf>
+            <core>
+                <rewrite>
+                    <email_template_mailer>Quafzi_SendPdf_Model_Core_Email_Template_Mailer</email_template_mailer>
+                </rewrite>
+            </core>
+            <sales>
+                <rewrite>
+                    <order_invoice>Quafzi_SendPdf_Model_Sales_Order_Invoice</order_invoice>
+                </rewrite>
+            </sales>
+        </models>
+        <blocks>
+            <firegento_pdf>
+                <class>Quafzi_SendPdf_Block</class>
+            </firegento_pdf>
+        </blocks>
+        <events>
+            <sales_order_invoice_mail_send_before>
+                <observers>
+                    <quafzi_sendpdf>
+                        <class>quafzi_sendpdf/observer</class>
+                        <method>attachInvoicePdf</method>
+                    </quafzi_sendpdf>
+                </observers>
+            </sales_order_invoice_mail_send_before>
+        </events>
+    </global>
+</config>
+
