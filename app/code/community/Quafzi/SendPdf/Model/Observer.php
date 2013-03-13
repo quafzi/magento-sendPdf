@@ -23,6 +23,6 @@ class Quafzi_SendPdf_Model_Observer
         $invoice = $params['invoice'];
 
         $pdf = Mage::getModel('sales/order_pdf_invoice')->getPdf(array($invoice));
-        $mailer->addPdf($pdf);
+        $mailer->addPdf($pdf, $invoice->getIncrementId() . '.pdf');
     }
 }

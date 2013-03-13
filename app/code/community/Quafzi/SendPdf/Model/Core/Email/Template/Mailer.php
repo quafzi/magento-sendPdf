@@ -22,9 +22,11 @@ class Quafzi_SendPdf_Model_Core_Email_Template_Mailer extends Mage_Core_Model_Em
     {
         $file = $pdf->render();
         $this->attachments[] = array(
-            'file' => $file,
-            'type' => 'application/pdf',
-            'name' => $filename
+            'file'        => $file,
+            'type'        => 'application/pdf',
+            'encoding'    => Zend_Mime::ENCODING_BASE64,
+            'disposition' => Zend_Mime::DISPOSITION_ATTACHMENT,
+            'name'        => $filename
         );
     }
 
@@ -43,9 +45,13 @@ class Quafzi_SendPdf_Model_Core_Email_Template_Mailer extends Mage_Core_Model_Em
             $emailTemplate->addBcc($emailInfo->getBccEmails());
             // add attachments
             foreach ($this->attachments as $attachment) {
-                $emailTemplate->getMail()->createAttachment($attachment['file']);
-                $attachment->type = $attachment['application/pdf'];
-                $attachment->filename = $attachment['test.pdf'];
+                $emailTemplate->getMail()->createAttachment(
+                    $attachment['file'],
+                    $attachment['type'],
+                    $attachment['disposition'],
+                    $attachment['encoding'],
+                    $attachment['name']
+                );
             }
             // Set required design parameters and delegate email sending to Mage_Core_Model_Email_Template
             $emailTemplate->setDesignConfig(array('area' => 'frontend', 'store' => $this->getStoreId()))
